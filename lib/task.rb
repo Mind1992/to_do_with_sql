@@ -22,7 +22,23 @@ class Task
     DB.exec("INSERT INTO tasks (name) VALUES ('#{@name}');")
   end
 
+  def destroy
+    DB.exec("DELETE FROM tasks WHERE name = ('#{@name}');")
+  end
+
   def ==(another_task)
     self.name == another_task.name
   end
+
+  def self.search(description)
+    found = "";
+    Task.all.each do |task|
+      if task.name == description
+        found = task
+      end
+    end
+    found
+  end
 end
+
+

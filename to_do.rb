@@ -16,9 +16,19 @@ def main_menu
     case user_input
       when '1' then add_task
       when '2' then list_all_tasks
+      when '3' then delete_task
       when '9' then exit
     end
   end
+end
+
+def delete_task
+  list_all_tasks
+  print "Type in the task name: "; user_input = gets.chomp
+  searched_task = Task.search(user_input)
+  searched_task.destroy
+  puts "#{user_input} was deleted"
+  puts list_all_tasks
 end
 
 def list_all_tasks

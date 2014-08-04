@@ -31,4 +31,23 @@ describe Task do
     task2 = Task.new('learn SQL')
     task1.should eq task2
   end
+
+  it 'lets you delete a task' do
+    task = Task.new('Learn SQL')
+    task.save
+    task2 = Task.new('Learn Postgres')
+    task2.save
+    task.destroy
+    expect(Task.all).to eq [task2]
+  end
+
+  describe '.search' do
+    it 'lets you find an object in database given a task name' do
+      task = Task.new('scrub the zebra')
+      task.save
+      task2 = Task.new('scrub the chinchilla')
+      task2.save
+      expect(Task.search('scrub the zebra')).to eq task
+    end
+  end
 end
