@@ -1,8 +1,7 @@
 require 'rspec'
 require 'list'
 require 'pg'
-
-DB = PG.connect({:dbname => 'to_do_test_js'})
+require 'spec_helper'
 
 RSpec.configure do |config|
   config.after(:each) do
