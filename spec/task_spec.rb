@@ -36,13 +36,26 @@ describe Task do
     task1.should eq task2
   end
 
-  it 'lets you delete a task' do
+  it 'lets you delete a task by name' do
     task = Task.new('Learn SQL', 1)
     task.save
     task2 = Task.new('Learn Postgres', 1)
     task2.save
-    task.destroy
+    task.destroy_by_name
     expect(Task.all).to eq [task2]
+  end
+
+  describe '.destroy_by_list_id' do
+    it 'lets you destroy all tasks by list_id' do
+      task = Task.new("scrub zebra", 1)
+      task2 = Task.new("scrub dog", 1)
+      task3 = Task.new("eat pizza", 2)
+      task.save
+      task2.save
+      task3.save
+      Task.destroy_by_list_id(1)
+      expect(Task.all).to eq [task3]
+    end
   end
 
   describe '.search' do

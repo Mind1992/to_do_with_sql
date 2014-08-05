@@ -24,7 +24,7 @@ class Task
     DB.exec("INSERT INTO tasks (name, list_id) VALUES ('#{@name}', #{@list_id});")
   end
 
-  def destroy
+  def destroy_by_name
     DB.exec("DELETE FROM tasks WHERE name = ('#{@name}');")
   end
 
@@ -34,6 +34,10 @@ class Task
 
   def self.search(description)
     found = Task.all.find { |task| task.name == description }
+  end
+
+  def self.destroy_by_list_id(number)
+    DB.exec("DELETE FROM tasks WHERE list_id = ('#{number}');")
   end
 end
 

@@ -45,7 +45,6 @@ class List
     tasks
   end
 
-
   def destroy
     DB.exec("DELETE FROM lists WHERE name = ('#{@name}');")
   end
