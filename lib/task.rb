@@ -31,13 +31,7 @@ class Task
   end
 
   def self.search(description)
-    found = "";
-    Task.all.each do |task|
-      if task.name == description
-        found = task
-      end
-    end
-    found
+    found = Task.all.find { |task| task.name == description }
   end
 end
 
