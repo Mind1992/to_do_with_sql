@@ -1,5 +1,6 @@
 require 'pg'
 require './lib/task'
+require './lib/list'
 
 DB = PG.connect({:dbname => 'to_do_js'})
 
@@ -24,6 +25,37 @@ def main_menu
   end
 end
 
+def add_list
+  print "New list: "; new_list = gets.chomp
+  List.new(new_list).save
+  puts "*#{new_list}* added"
+end
+
+def add_task
+  puts "Select a list:"
+  List.all.each { |list| puts list.name }
+  print ">"
+  list = gets.chomp
+  found_list = List.search_by_name(list)
+  print "New task: ";
+  print ">"; new_task = gets.chomp
+  task_added = Task.new(new_task, found_list.id).save
+  puts "The tasks #{new_task} has been added."
+end
+
+def list_all_tasks
+  puts "Select a list:"
+  List.all.each { |list| puts list.name }
+  print ">"
+  list = gets.chomp
+  found_list = List.search_by_name(list)
+  puts "Your tasks are:\n"
+  puts "\n"
+  found_list.tasks(found_list.id).each { |task| puts task.name }
+  #found_list.each { |task| puts task.name }
+  puts "\n"
+end
+
 def delete_task
   list_all_tasks
   print "Type in the task name: "; user_input = gets.chomp
@@ -33,22 +65,11 @@ def delete_task
   puts list_all_tasks
 end
 
-def list_all_tasks
-  puts "Your tasks are:\n"
-  Task.all.each { |task| puts task.name }
-  puts "\n"
-end
 
-def add_task
-  print "New task: "; new_task = gets.chomp
-  Task.new(new_task).save
-  test = DB.exec("SELECT * FROM tasks;")
-end
 
-def add_list
-  print "New list: "; new_list = gets.chomp
-  List.new(new_list).save
-end
+
+
+
 
 
 main_menu
