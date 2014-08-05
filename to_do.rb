@@ -1,7 +1,7 @@
 require 'pg'
 require './lib/task'
 
-DB = PG.connect({:dbname => 'to_do'})
+DB = PG.connect({:dbname => 'to_do_js'})
 
 def main_menu
   loop do
