@@ -45,4 +45,25 @@ describe List do
     list.save
     expect(list.id).to be_an_instance_of Fixnum
   end
+
+  describe '.search_by_name' do
+    it 'allows user to search for a list by name' do
+      list = List.new('learn SQL')
+      list.save
+      list2 = List.new('Clean')
+      list2.save
+      expect(List.search_by_name('learn SQL')).to eq list
+    end
+  end
+
+  # describe '.tasks' do
+  #   it 'returns all of the tasks for a list' do
+  #     list = List.new('Epicodus Stuff')
+  #     task = Task.new('Learn SQL', 1)
+  #     task.save
+  #     task2 = Task.new('Learn Postgres', 1)
+  #     task2.save
+  #     expect(List.tasks(1)).to eq [task,task2]
+  #   end
+  # end
 end

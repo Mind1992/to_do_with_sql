@@ -7,6 +7,15 @@ class List
     @id = id
   end
 
+  def save
+    results = DB.exec("INSERT INTO lists (name) VALUES ('#{@name}') RETURNING id;")
+    @id = results.first['id'].to_i
+  end
+
+  def ==(another_list)
+    self.name == another_list.name && self.id == another_list.id
+  end
+
   def self.all
     results = DB.exec("SELECT * FROM lists;")
     lists = []
@@ -18,13 +27,11 @@ class List
     lists
   end
 
-  def save
-    results = DB.exec("INSERT INTO lists (name) VALUES ('#{@name}') RETURNING id;")
-    @id = results.first['id'].to_i
+  def self.search_by_name(description)
+    found = List.all.find { |list| list.name == description }
   end
 
-  def ==(another_list)
-    self.name == another_list.name && self.id == another_list.id
-  end
+  # def self.tasks(list_id)
 
+  # end
 end
