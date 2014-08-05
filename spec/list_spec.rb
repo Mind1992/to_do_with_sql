@@ -40,4 +40,10 @@ describe List do
     list2.save
     expect(List.all).to eq [list1,list2]
   end
+
+  it 'sets its ID when you save it' do
+    list = List.new('learn SQL')
+    list.save
+    expect(list.id).to be_an_instance_of Fixnum
+  end
 end
