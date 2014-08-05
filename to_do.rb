@@ -12,6 +12,7 @@ def main_menu
     puts "3: list all tasks for a list"
     puts "4: delete a task"
     puts "5: delete a list and all of its tasks"
+    puts "6: mark a task as done"
     puts "9: exit"
     puts "\n"
     print ">"
@@ -22,6 +23,7 @@ def main_menu
       when '3' then list_all_tasks
       when '4' then delete_task
       when '5' then delete_list
+      when '6' then mark_task
       when '9' then exit
     end
   end
@@ -85,6 +87,21 @@ def delete_list
   searched_list.destroy
   puts "#{choosen_list} list was deleted"
   Task.destroy_by_list_id(searched_list.id)
+end
+
+def mark_task
+  puts "Here are all the lists: "
+  List.all.each { |list| puts list.name }
+  print "Type in the list name: "; choosen_list = gets.chomp
+  searched_list = List.search_by_name(choosen_list)
+  searched_list.tasks(searched_list.id).each do |task|
+    puts task.name
+    puts "\n"
+  end
+  print "Type in the task name: "; user_input = gets.chomp
+  searched_task = Task.search(user_input)
+  searched_task.marked_done
+  puts "#{searched_task.name} has been marked done"
 end
 
 main_menu
