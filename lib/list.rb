@@ -31,7 +31,32 @@ class List
     found = List.all.find { |list| list.name == description }
   end
 
-  # def self.tasks(list_id)
+  def tasks(list_id)
+    list_found = List.all.find { |list| self.id == list_id}
+    results = DB.exec("SELECT * FROM tasks WHERE list_id = #{list_id};")
+    tasks = []
+    results.each do |task|
+      name = task['name']
+      list_id = task['list_id'].to_i
+      tasks << Task.new(name, list_id)
+    end
+    tasks
+    end
+  end
 
+  def tasks
+   results = DB.exec("SELECT * FROM tasks;")
+   tasks = []
+   results.each do |result|
+    name = result['name']
+    list_id = result['list_id'].to_i
+    tasks << Task.new(name, list_id)
+  end
+
+  #   array = []
+  #   self.each do |task|
+  #     array << task.name
+  #   end
+  #   array
   # end
 end

@@ -56,14 +56,13 @@ describe List do
     end
   end
 
-  # describe '.tasks' do
-  #   it 'returns all of the tasks for a list' do
-  #     list = List.new('Epicodus Stuff')
-  #     task = Task.new('Learn SQL', 1)
-  #     task.save
-  #     task2 = Task.new('Learn Postgres', 1)
-  #     task2.save
-  #     expect(List.tasks(1)).to eq [task,task2]
-  #   end
-  # end
+  it 'returns all of the tasks for a list' do
+    list = List.new('Epicodus Stuff')
+    task = Task.new('Learn SQL', 1)
+    task2 = Task.new('Learn Postgres', 1)
+    task.save
+    task2.save
+    list.save
+    expect(list.tasks(1)).to eq [task,task2]
+  end
 end

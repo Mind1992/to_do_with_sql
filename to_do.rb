@@ -9,6 +9,7 @@ def main_menu
     puts "1: add task"
     puts "2: list all tasks"
     puts "3: delete task"
+    puts "4: add list"
     puts "9: exit"
     puts "\n"
     print ">"
@@ -17,6 +18,7 @@ def main_menu
       when '1' then add_task
       when '2' then list_all_tasks
       when '3' then delete_task
+      when '4' then add_list
       when '9' then exit
     end
   end
@@ -41,6 +43,10 @@ def add_task
   print "New task: "; new_task = gets.chomp
   Task.new(new_task).save
   test = DB.exec("SELECT * FROM tasks;")
+end
+
+def add_list
+
 end
 
 main_menu
