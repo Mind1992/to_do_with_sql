@@ -65,4 +65,13 @@ describe List do
     list.save
     expect(list.tasks(1)).to eq [task,task2]
   end
+
+  it 'lets you delete a list' do
+    list = List.new('learn SQL')
+    list2 = List.new('learn Ruby')
+    list.save
+    list2.save
+    list.destroy
+    expect(List.all).to eq [list2]
+  end
 end

@@ -1,3 +1,5 @@
+require 'pg'
+
 class List
 
   attr_accessor :name, :id
@@ -41,22 +43,10 @@ class List
       tasks << Task.new(name, list_id)
     end
     tasks
-    end
   end
 
-  def tasks
-   results = DB.exec("SELECT * FROM tasks;")
-   tasks = []
-   results.each do |result|
-    name = result['name']
-    list_id = result['list_id'].to_i
-    tasks << Task.new(name, list_id)
-  end
 
-  #   array = []
-  #   self.each do |task|
-  #     array << task.name
-  #   end
-  #   array
-  # end
+  def destroy
+    DB.exec("DELETE FROM lists WHERE name = ('#{@name}');")
+  end
 end

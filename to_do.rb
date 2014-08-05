@@ -52,7 +52,6 @@ def list_all_tasks
   puts "Your tasks are:\n"
   puts "\n"
   found_list.tasks(found_list.id).each { |task| puts task.name }
-  #found_list.each { |task| puts task.name }
   puts "\n"
 end
 
