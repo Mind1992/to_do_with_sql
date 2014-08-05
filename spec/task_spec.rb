@@ -2,6 +2,7 @@ require 'pg'
 require 'rspec'
 require 'task'
 require 'spec_helper'
+require 'pry'
 
 RSpec.configure do |config|
   config.after(:each) do
@@ -34,6 +35,13 @@ describe Task do
     task1 = Task.new('learn SQL', 1)
     task2 = Task.new('learn SQL', 1)
     task1.should eq task2
+  end
+
+  it 'allows user to mark a task as done' do
+    task1 = Task.new('learn SQL', 1)
+    task1.save
+    task1.marked_done
+    expect(Task.all[0].done).to eq true
   end
 
   it 'lets you delete a task by name' do

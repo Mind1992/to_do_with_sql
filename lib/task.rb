@@ -2,11 +2,12 @@ require 'pg'
 
 class Task
 
-  attr_accessor :name, :list_id
+  attr_accessor :name, :list_id, :done
 
-  def initialize(name, list_id)
+  def initialize(name, list_id, done=false)
     @name = name
     @list_id = list_id
+    @done = done
   end
 
   def self.all
@@ -15,13 +16,14 @@ class Task
    results.each do |result|
     name = result['name']
     list_id = result['list_id'].to_i
-    tasks << Task.new(name, list_id)
+    done = result['done'] == 't' ? true : false
+    tasks << Task.new(name, list_id, done)
   end
   tasks
   end
 
   def save
-    DB.exec("INSERT INTO tasks (name, list_id) VALUES ('#{@name}', #{@list_id});")
+    DB.exec("INSERT INTO tasks (name, list_id, done) VALUES ('#{@name}', #{@list_id}, #{@done});")
   end
 
   def destroy_by_name
@@ -38,6 +40,11 @@ class Task
 
   def self.destroy_by_list_id(number)
     DB.exec("DELETE FROM tasks WHERE list_id = ('#{number}');")
+  end
+
+  def marked_done
+    DB.exec("UPDATE tasks SET done = 't' WHERE name = ('#{@name}');")
+    @done = true
   end
 end
 
