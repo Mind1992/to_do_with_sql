@@ -77,17 +77,14 @@ def delete_task
   end
 end
 
-def delete_list_and_tasks
-
-end
-
 def delete_list
-  list_all_lists
-  print "Type in the list name: "; user_input = gets.chomp
-  searched_list = List.search_by_name(user_input)
+  puts "Here are all the lists: "
+  List.all.each { |list| puts list.name }
+  print "Type in the list name: "; choosen_list = gets.chomp
+  searched_list = List.search_by_name(choosen_list)
   searched_list.destroy
-  puts "#{user_input} list was deleted"
-  puts list_all_lists
+  puts "#{choosen_list} list was deleted"
+  Task.destroy_by_list_id(searched_list.id)
 end
 
 main_menu
