@@ -2,12 +2,13 @@ require 'pg'
 
 class Task
 
-  attr_accessor :name, :list_id, :done
+  attr_accessor :name, :list_id, :done, :due_date
 
   def initialize(name, list_id, done=false)
     @name = name
     @list_id = list_id
     @done = done
+    @due_date = false
   end
 
   def self.all
@@ -17,13 +18,14 @@ class Task
     name = result['name']
     list_id = result['list_id'].to_i
     done = result['done'] == 't' ? true : false
-    tasks << Task.new(name, list_id, done)
+    due_date = result['due_date']
+    tasks << Task.new(name, list_id, done, due_date)
   end
   tasks
   end
 
   def save
-    DB.exec("INSERT INTO tasks (name, list_id, done) VALUES ('#{@name}', #{@list_id}, #{@done});")
+    DB.exec("INSERT INTO tasks (name, list_id, done, due_date) VALUES ('#{@name}', #{@list_id}, #{@done},'#{due_date}');")
   end
 
   def destroy_by_name

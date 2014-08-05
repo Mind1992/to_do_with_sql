@@ -44,6 +44,13 @@ describe Task do
     expect(Task.all[0].done).to eq true
   end
 
+  it 'allows user to enter a due date' do
+    task = Task.new('learn SQL', 1)
+    task.due_date = '2014-08-14'
+    task.save
+    expect(Task.all.first.due_date).to  eq '2014-08-14'
+  end
+
   it 'lets you delete a task by name' do
     task = Task.new('Learn SQL', 1)
     task.save
